@@ -4,6 +4,9 @@ import UserForm from './components/userform/UserForm';
 import UserList from './components/userlist/UserList';
 import UserSearch from './components/usersearch/UserSearch';
 
+
+const API_BASE_URL = 'https://proyecto-db-2fjt.onrender.com';
+
 function App() {
   const [usuarios, setUsuarios] = useState([]);
   const [busqueda, setBusqueda] = useState('');
@@ -15,7 +18,7 @@ function App() {
 
   const fetchUsuarios = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/usuarios');
+      const response = await fetch(`${API_BASE_URL}/api/usuarios`);
       const data = await response.json();
       setUsuarios(data);
     } catch (error) {
@@ -26,8 +29,8 @@ function App() {
   const handleSubmit = async (usuario) => {
     try {
       const url = usuarioEditando 
-        ? `http://localhost:5000/api/usuarios/${usuarioEditando.id}`
-        : 'http://localhost:5000/api/usuarios';
+        ? `${API_BASE_URL}/api/usuarios/${usuarioEditando.id}`
+        : `${API_BASE_URL}/api/usuarios`;
       
       const method = usuarioEditando ? 'PUT' : 'POST';
       
@@ -48,7 +51,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/usuarios/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/usuarios/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Error al eliminar');
