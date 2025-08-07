@@ -9,13 +9,16 @@ function App() {
   const [busqueda, setBusqueda] = useState('');
   const [usuarioEditando, setUsuarioEditando] = useState(null);
 
+  // Cambié solo esta línea:
+  const API_URL = 'https://proyecto-db-slmz.onrender.com/api';
+
   useEffect(() => {
     fetchUsuarios();
   }, []);
 
   const fetchUsuarios = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/usuarios');
+      const response = await fetch(`${API_URL}/usuarios`);
       const data = await response.json();
       setUsuarios(data);
     } catch (error) {
@@ -26,8 +29,8 @@ function App() {
   const handleSubmit = async (usuario) => {
     try {
       const url = usuarioEditando 
-        ? `http://localhost:5000/api/usuarios/${usuarioEditando.id}`
-        : 'http://localhost:5000/api/usuarios';
+        ? `${API_URL}/usuarios/${usuarioEditando.id}`
+        : `${API_URL}/usuarios`;
       
       const method = usuarioEditando ? 'PUT' : 'POST';
       
@@ -48,7 +51,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/usuarios/${id}`, {
+      const response = await fetch(`${API_URL}/usuarios/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Error al eliminar');
